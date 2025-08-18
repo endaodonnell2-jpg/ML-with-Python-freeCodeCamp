@@ -1,11 +1,11 @@
 #remember a tensor is a vector generalised to higher dimensions
 import tensorflow as tf
-string = tf.Variable("this is a string", tf.string)#Here we create a tensor variable of datatyp string
+string = tf.Variable("this is a string", tf.string)#Here we create a tensor variable of datatyp string rank 0
 number = tf.Variable(324, tf.int32)
 floating = tf.Variable(2.22, tf.float64)
 
 
-rank1_tensor = tf.Variable(["this is a string"], tf.string)
+rank1_tensor = tf.Variable(["this is a string"], tf.string) #This has one rank, a 1D array, and can store more than one value
 
 
 rank2_tensor = tf.Variable([["This", "is", "nice"],[ "kinda", "tensor", "now"],["ghh", "ghfd","dsgfs"]], tf.string) #This has a shape of (3,3)
@@ -24,6 +24,7 @@ t = tf.reshape(t,[125, -1]) #This reshapes the tensor to output 625 of those dat
 print(t)
 
 output of code below
+
 (3, 3)
 tf.Tensor(
 [[[1. 1. 1.]
