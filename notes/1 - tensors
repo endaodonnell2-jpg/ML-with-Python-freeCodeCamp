@@ -1,6 +1,6 @@
 #remember a tensor is a vector generalised to higher dimensions
 import tensorflow as tf
-string = tf.Variable("this is a string", tf.string)
+string = tf.Variable("this is a string", tf.string)#Here we create a tensor variable of datatyp string
 number = tf.Variable(324, tf.int32)
 floating = tf.Variable(2.22, tf.float64)
 
