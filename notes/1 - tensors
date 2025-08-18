@@ -1,3 +1,4 @@
+#remember a tensor is a vector generalised to higher dimensions
 import tensorflow as tf
 string = tf.Variable("this is a string", tf.string)
 number = tf.Variable(324, tf.int32)
