@@ -35,20 +35,94 @@ y_train = dftrain.pop('Survived') #I´m popping the column "survived" taking it 
 print("testing file")
 print(dftest.head())
 
+Ouput here
+testing file
+   PassengerId  Pclass                                          Name     Sex  \
+0          892       3                              Kelly, Mr. James    male   
+1          893       3              Wilkes, Mrs. James (Ellen Needs)  female   
+2          894       2                     Myles, Mr. Thomas Francis    male   
+3          895       3                              Wirz, Mr. Albert    male   
+4          896       3  Hirvonen, Mrs. Alexander (Helga E Lindqvist)  female   
+
+    Age  SibSp  Parch   Ticket     Fare Cabin Embarked  
+0  34.5      0      0   330911   7.8292   NaN        Q  
+1  47.0      1      0   363272   7.0000   NaN        S  
+2  62.0      0      0   240276   9.6875   NaN        Q  
+3  27.0      0      0   315154   8.6625   NaN        S  
+4  22.0      1      1  3101298  12.2875   NaN        S  
+
 print("y_train")
 print(y_train) #This shows that the data is stored in y_train 0 means died 1 means survived
+
+output
+y_train
+0      0
+1      1
+2      1
+3      1
+4      0
+      ..
+886    0
+887    1
+888    0
+889    1
+890    0
+Name: Survived, Length: 891, dtype: int64
 
 print(dftrain.loc[0], y_train.loc[0]) #gives the first row "not header as it´s automatically removed"
 
 print(dftrain.loc[1], y_train.loc[1]) #gives the real second row first record
 
+output
+PassengerId                          1
+Pclass                               3
+Name           Braund, Mr. Owen Harris
+Sex                               male
+Age                               22.0
+SibSp                                1
+Parch                                0
+Ticket                       A/5 21171
+Fare                              7.25
+Cabin                              NaN
+Embarked                             S
+Name: 0, dtype: object 0
+PassengerId                                                    2
+Pclass                                                         1
+Name           Cumings, Mrs. John Bradley (Florence Briggs Th...
+Sex                                                       female
+Age                                                         38.0
+SibSp                                                          1
+Parch                                                          0
+Ticket                                                  PC 17599
+Fare                                                     71.2833
+Cabin                                                        C85
+Embarked                                                       C
+Name: 1, dtype: object 1
+
+
 print("\n\n Here is the dftrain age column")
 print(dftrain["Age"])
 
+output
+Here is the dftrain age column
+0      22.0
+1      38.0
+2      26.0
+3      35.0
+4      35.0
+       ... 
+886    27.0
+887    19.0
+888     NaN
+889    26.0
+890    32.0
+Name: Age, Length: 891, dtype: float64
+
 dftrain.describe() #This gives some maths concepts on the data, box and whisker mean std etc
+
 
 dftrain.shape #This showe shape of the data frame given 891 rows and 11 columns
 
 dftrain.Age.hist(bins=20) #this shows a histogram of ages in 20 blocks, we can see that most people are between 17 and 32
 
-dftrain['class']
+
