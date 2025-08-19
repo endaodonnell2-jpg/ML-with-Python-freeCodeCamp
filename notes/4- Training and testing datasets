@@ -1,0 +1,14 @@
+CATEGORICAL_COLUMNS = ["Name", "Sex", "Ticket", "Cabin", "Embarked"]
+NUMERIC_COLUMNS = ["Pclass", "Age", "SibSp", "Parch", "Fare"]
+
+feature_columns = []                          #Make for linear regression
+
+for feature_name in CATEGORICAL_COLUMNS:      #loop through each feature name in CATEGORICAL_COLUMNS
+  vocabulary = dftrain[feature_name].unique() # This finds all the unique nme for each column, first "name", then "Sex".....
+  feature_columns.append(tf.feature_column.categorical_column_with_vocabulary_list(feature_name, vocabulary)) #appends all the uniques
+
+for feature_name in NUMERIC_COLUMNS:        #loop through each feature name in NUMERIC_COLUMNS
+  feature_columns.append(tf.feature_column.numeric_column(feature_name, dtype=tf.float32))
+
+dftrain["Sex"].unique()                 #This is simply to show the number of unique "SibSp", it will output - array(['male', 'female'], dtype=object) -
+print(feature_columns)                  #This prints all the columns with their unique values and features
