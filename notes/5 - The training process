@@ -70,3 +70,29 @@ model.fit(
 # Evaluate the model on the validation set
 final_loss, final_accuracy = model.evaluate(X_val_processed, y_val, verbose=0)
 print("Final validation accuracy:", final_accuracy)
+
+output 
+Training shape: (712, 11)
+Validation shape: (179, 11)
+Epoch 1/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 2s 15ms/step - accuracy: 0.6326 - loss: 0.6640 - val_accuracy: 0.7821 - val_loss: 0.5880
+Epoch 2/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 6ms/step - accuracy: 0.7679 - loss: 0.5836 - val_accuracy: 0.7821 - val_loss: 0.5380
+Epoch 3/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 6ms/step - accuracy: 0.7662 - loss: 0.5472 - val_accuracy: 0.8101 - val_loss: 0.4947
+Epoch 4/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 9ms/step - accuracy: 0.7817 - loss: 0.5210 - val_accuracy: 0.8268 - val_loss: 0.4583
+Epoch 5/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 6ms/step - accuracy: 0.7896 - loss: 0.4784 - val_accuracy: 0.8380 - val_loss: 0.4368
+Epoch 6/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 1s 20ms/step - accuracy: 0.7825 - loss: 0.4678 - val_accuracy: 0.8324 - val_loss: 0.4219
+Epoch 7/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 1s 19ms/step - accuracy: 0.8039 - loss: 0.4580 - val_accuracy: 0.8324 - val_loss: 0.4140
+Epoch 8/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 9ms/step - accuracy: 0.8054 - loss: 0.4428 - val_accuracy: 0.8156 - val_loss: 0.4078
+Epoch 9/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 7ms/step - accuracy: 0.8203 - loss: 0.4311 - val_accuracy: 0.8101 - val_loss: 0.4068
+Epoch 10/10
+23/23 ━━━━━━━━━━━━━━━━━━━━ 0s 6ms/step - accuracy: 0.8094 - loss: 0.4535 - val_accuracy: 0.8101 - val_loss: 0.4045
+Final validation accuracy: 0.8100558519363403
+
