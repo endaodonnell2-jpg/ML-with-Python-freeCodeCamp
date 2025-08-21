@@ -1,0 +1,72 @@
+import tensorflow as tf              #This imports TensorFlow so you can build, train, and evaluate the neural network.
+from tensorflow.keras import layers, models 
+from sklearn.preprocessing import OneHotEncoder, StandardScaler  #this line prepares tools to transform your 
+                                                                  #raw data into a form your neural network can handle efficiently.
+from sklearn.compose import ColumnTransformer
+import numpy as np              #This imports NumPy, a library for numerical operations, 
+                                #such as handling arrays and mathematical computations used during data preprocessing and analysis.
+import pandas as pd             #pandas is a library for handling tabular data
+from sklearn.model_selection import train_test_split    #Splitting arrays into random train and test subsets
+
+# --- Load data ---
+df = pd.read_csv('train.csv')
+dftrain, dfeval = train_test_split(df, test_size=0.2, random_state=42)  #splits the training file to train and test 80% 20%
+
+# Clean and prepare data
+for dataset in [dftrain, dfeval]:   #we creating a loop to process dftrain and dfeval, they have the same same columns dftrain 80%, dfeval has 20%
+    dataset['Age'] = dataset['Age'].fillna(dftrain['Age'].mean()).astype(np.float32) #replaces NaN "not a number" with the mean of Age float32
+    dataset['Fare'] = dataset['Fare'].fillna(dftrain['Fare'].mean()).astype(np.float32) #replaces NaN with the mean the mean of Fare float32
+    dataset['Sex'] = dataset['Sex'].astype(str)       #converts everything in this line to a string to maintain categorical consistancy
+    dataset['Embarked'] = dataset['Embarked'].fillna('Unknown').astype(str) #every cell in Embarked is a string, and there are no missing values, empty lines are `unkonwn`
+
+# Split labels
+y_train = dftrain.pop('Survived').values.astype(np.float32) #removes 'Survived' from dftrain and puts it in y_train converts to nparray float32
+y_val = dfeval.pop('Survived').values.astype(np.float32)    #removes 'Survived' from dfeval and puts it in y_val converts to nparray float32
+
+# Features
+numeric_features = ["Pclass", "Age", "SibSp", "Parch", "Fare"] #Give a varaible name for us to understand its a number array
+categorical_features = ["Sex", "Embarked"]                     #Give a varaible name for us to understand its not a number array
+
+# Preprocessor
+#This line of code below scales the numeric features so that their mean is 0 and standard deviation is 1. 
+# Each value is converted to a z-score for numeric_features = ["Pclass", "Age",
+# "SibSp", "Parch", "Fare"] which measures how many standard deviations it is
+# away from the mean, like placing it on a bell curve categorical columns get
+# converted into 0/1 vectors, and the ColumnTransformer combines them into one
+# processed array you can feed into a model.
+preprocessor = ColumnTransformer([
+    ('num', StandardScaler(), numeric_features),
+    ('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), categorical_features)
+])
+
+X_train_processed = preprocessor.fit_transform(dftrain).astype(np.float32) # Standardizes numeric features to z-scores (mean 0, std 1) and one-hot encodes categorical features
+X_val_processed = preprocessor.transform(dfeval).astype(np.float32)       # Apply the same preprocessing (scaling and encoding) to validation data
+
+print("Training shape:", X_train_processed.shape)
+print("Validation shape:", X_val_processed.shape)
+
+# --- Define model ---
+model = models.Sequential([
+    layers.Input(shape=(X_train_processed.shape[1],)), #Number of columns and what they have
+    layers.Dense(32, activation='relu'),               #32 to recieve a wider input feautures, all columns
+    layers.Dense(16, activation='relu'),                #16 to refine, outputs of the first 32 neurons avoid overfitting
+    layers.Dense(1, activation='sigmoid')               #reduces to 1 to see if survived or not
+])
+
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']) # Tells the model how to learn: which method to use to adjust itself (Adam), 
+                                                                                  #how to measure mistakes (binary loss), and what to check to see if it's doing well (accuracy)
+
+
+# --- Train model ---
+model.fit(
+    X_train_processed,
+    y_train,
+    epochs=10,
+    batch_size=32,
+    validation_data=(X_val_processed, y_val),
+    verbose=1
+)
+
+# Evaluate the model on the validation set
+final_loss, final_accuracy = model.evaluate(X_val_processed, y_val, verbose=0)
+print("Final validation accuracy:", final_accuracy)
